@@ -16,6 +16,10 @@ Update an existing install: sidebar → ⚙ Settings → **Updates**, or `lunari
 ## [Unreleased]
 
 ### Added
+- **Default monitor layout**: Settings → Monitors → Saved layouts → ★ makes a layout the default; it is loaded at
+  every login when its screens are connected (before, the screens came up in the driver's order and the layout had
+  to be applied again). Without a default, a saved layout matching the screens is used. `dwm-monitor default main`,
+  `dwm-monitor default off`.
 - **Brightness of external monitors**: Sidebar → **Brightness** has a slider for every screen (laptop panel and
   each external monitor, over DDC/CI with `ddcutil`) plus *All screens*; the brightness keys change every screen.
   `dwm-bright list`, `dwm-bright set HDMI-A-0 40`, `dwm-bright set all +10`; `dwm-bright doctor` explains what is

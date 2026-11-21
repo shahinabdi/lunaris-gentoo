@@ -14,7 +14,7 @@ Item {
     signal requestClose()
 
     property var outs: []       // [{ name, on, primary, mode, rate, x, y, modes, model, scale, logical }]
-    property var profiles: []   // [{ name, state }]
+    property var profiles: []   // [{ name, state, isDefault }]
     property bool auto: true
 
     function refresh() { listP.running = true; profP.running = true; autoP.running = true }
@@ -43,7 +43,7 @@ Item {
         command: ["dwm-monitor", "profiles"]
         stdout: StdioCollector {
             onStreamFinished: root.profiles = this.text.split("\n").filter(l => l).map(l => {
-                const f = l.split("|"); return { name: f[0], state: f[1] || "" } })
+                const f = l.split("|"); return { name: f[0], state: f[1] || "", isDefault: f[2] === "1" } })
         }
     }
     Process {
@@ -353,7 +353,7 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
-                    text: modelData.name + (modelData.state ? "  ·  " + modelData.state : "")
+                    text: modelData.name + (modelData.isDefault ? "  ·  default" : "") + (modelData.state ? "  ·  " + modelData.state : "")
                     color: modelData.state === "current" ? "#7aa2f7" : "#c0caf5"
                     font.pixelSize: 12
                 }
@@ -362,6 +362,21 @@ Item {
                     anchors.rightMargin: 6
                     anchors.verticalCenter: parent.verticalCenter
                     spacing: 6
+                    // default layout: loaded at login (click again: no default)
+                    Rectangle {
+                        width: 24; height: 24; radius: 7
+                        color: sm2.containsMouse ? "#e0af68" : "#24283b"
+                        Text {
+                            anchors.centerIn: parent
+                            text: String.fromCodePoint(modelData.isDefault ? 0xF04CE : 0xF04D2)   // star / star-outline
+                            font.family: "JetBrainsMono Nerd Font Mono"; font.pixelSize: 13
+                            color: sm2.containsMouse ? "#1a1b26" : "#e0af68"
+                        }
+                        MouseArea {
+                            id: sm2; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
+                            onClicked: root.mon(["default", modelData.isDefault ? "off" : modelData.name])
+                        }
+                    }
                     Rectangle {
                         width: 54; height: 24; radius: 7
                         color: am.containsMouse ? "#7aa2f7" : "#24283b"
@@ -379,7 +394,7 @@ Item {
         }
         Text {
             width: parent.width
-            text: "Save a layout once for each setup (laptop only, desk, TV…). When the same screens are plugged in again it is applied automatically."
+            text: "Save a layout once for each setup (laptop only, desk, TV…). When the same screens are plugged in again it is applied automatically. ★ = the default: loaded at every login when its screens are connected (save it again with the same name after changing the layout)."
             color: "#565f89"; font.pixelSize: 10; wrapMode: Text.WordWrap
         }
     }
