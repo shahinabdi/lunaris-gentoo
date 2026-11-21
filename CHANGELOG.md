@@ -16,6 +16,11 @@ Update an existing install: sidebar → ⚙ Settings → **Updates**, or `lunari
 ## [Unreleased]
 
 ### Added
+- **Brightness of external monitors**: Sidebar → **Brightness** has a slider for every screen (laptop panel and
+  each external monitor, over DDC/CI with `ddcutil`) plus *All screens*; the brightness keys change every screen.
+  `dwm-bright list`, `dwm-bright set HDMI-A-0 40`, `dwm-bright set all +10`; `dwm-bright doctor` explains what is
+  missing. The installer adds `ddcutil`, loads `i2c-dev` at boot and gives your user access to `/dev/i2c-*`
+  (`i2c` group: log in again once). DDC/CI must be on in the monitor's own menu (it usually is).
 - **Per-screen scaling**: every monitor has its own scale (e.g. a 4K panel at 175 %, the others at 100 %) instead of
   one scale for the primary only. Sidebar → ⚙ Settings → **Screen & bar** (pick the screen, then the scale) or
   **Monitors** (a scale row on each screen); `Mod+Shift+d` asks which screen; `dwm-display scale 150 HDMI-A-0`

@@ -441,6 +441,15 @@ setup_system() {
 		/etc/systemd/system/autorandr.service.d/override.conf
 	run sudo systemctl daemon-reload
 	info "monitors: plug in a screen -> saved layout, or extended side by side (autorandr); screens asleep are left alone"
+	# brightness of external monitors (DDC/CI, dwm-bright): i2c-dev at boot, /dev/i2c-* for this user
+	echo i2c-dev | run sudo tee /etc/modules-load.d/i2c-dev.conf >/dev/null
+	run sudo modprobe i2c-dev
+	getent group i2c >/dev/null || run sudo groupadd --system i2c
+	run sudo usermod -aG i2c "$USER"
+	run sudo install -Dm644 "$REPO/system/etc/udev/rules.d/60-lunaris-i2c.rules" /etc/udev/rules.d/60-lunaris-i2c.rules
+	run sudo udevadm control --reload
+	run sudo udevadm trigger --subsystem-match=i2c-dev
+	info "monitor brightness: ddcutil + i2c-dev (log in again for the i2c group; check with: dwm-bright doctor)"
 	run sudo localectl set-x11-keymap "$LAYOUTS" pc105 "" ""
 	info "keyboard: $LAYOUTS (Mod+Space switches), dwm keys: $KEYBOARD"
 

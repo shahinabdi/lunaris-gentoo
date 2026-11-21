@@ -77,6 +77,10 @@ like magnets), turn screens on/off, pick the resolution, the **scale of each scr
 at 100 %) and the primary; save the layout so it comes back when the same screens are plugged in.
 In a terminal: `dwm-display scale 150 HDMI-A-0`, `dwm-monitor set DP-1=1920,0`, `dwm-monitor list`.
 
+**Brightness**: the sidebar has a slider for each screen — the laptop panel and every external monitor
+(DDC/CI through `ddcutil`) — and one for all of them; the brightness keys change all screens.
+In a terminal: `dwm-bright list`, `dwm-bright set HDMI-A-0 40`; if a monitor is missing: `dwm-bright doctor`.
+
 ## System monitor
 Sidebar → **System**: CPU (with temperature), memory, disk and the busiest apps; **htop** opens in one click.
 
