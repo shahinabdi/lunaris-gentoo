@@ -1,6 +1,7 @@
 #!/bin/sh
 # autorandr postswitch (Lunaris): runs after every monitor change, also from the udev hotplug service
 export PATH="$HOME/.local/bin:/usr/local/bin:/usr/bin"
+dwm-monitor tearfree >/dev/null 2>&1                 # Gentoo / AMD X driver: no tearing on scaled screens
 dwm-wall restore --no-slideshow >/dev/null 2>&1      # wallpaper on every screen
 dwm-ctl refresh >/dev/null 2>&1                       # status bar
 n=$(xrandr --listactivemonitors 2>/dev/null | head -1 | awk '{print $2}')
