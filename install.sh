@@ -435,7 +435,7 @@ setup_system_gentoo() {
 
 # brightness of external monitors (DDC/CI, dwm-bright): i2c-dev at boot, /dev/i2c-* for this user
 setup_ddc() {
-	run sudo sh -c 'echo i2c-dev > /etc/modules-load.d/i2c-dev.conf'
+	run sudo sh -c 'mkdir -p /etc/modules-load.d && echo i2c-dev > /etc/modules-load.d/i2c-dev.conf'   # Gentoo: folder may not exist
 	run sudo modprobe i2c-dev
 	getent group i2c >/dev/null || run sudo groupadd --system i2c
 	run sudo usermod -aG i2c "$USER"
