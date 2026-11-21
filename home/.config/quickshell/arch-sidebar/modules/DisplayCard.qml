@@ -20,7 +20,8 @@ Item {
     property real barScale: 1.0
     property int fontSize: 0
     property string resolution: ""
-    readonly property var scales: [100, 125, 150, 175, 200]
+    property var modes: []             // the primary's resolutions
+    readonly property var scales: [100, 125, 150, 175, 200, 225, 250]
     readonly property var barScales: [1.0, 1.15, 1.3, 1.5, 1.75]
 
     function refresh() { statusProcess.running = true }
@@ -39,6 +40,7 @@ Item {
                     else if (k === "bar") root.barScale = Number(v) || 1
                     else if (k === "font") root.fontSize = Number(v)
                     else if (k === "res") root.resolution = v
+                    else if (k === "modes") root.modes = v.split(",").filter(x => x)
                 }
                 const sel = root.screens.find(x => x.name === root.screen)
                 if (sel) root.scale = sel.scale
@@ -132,16 +134,18 @@ Item {
 
             RowTitle { title: "Screen scale"; value: root.scale + "%" }
             // several screens: pick which one (each has its own scale)
-            ChipRow {
+            Dropdown {
                 visible: root.screens.length > 1
+                title: "Screen"
                 values: root.screens.map(x => x.name)
                 current: root.screen || (root.screens[0] ? root.screens[0].name : "")
-                label: v => v.replace("DisplayPort-", "DP-").replace("HDMI-A-", "HDMI-")
                 onPicked: v => { root.screen = v; const x = root.screens.find(s => s.name === v); if (x) root.scale = x.scale }
             }
-            ChipRow {
+            Dropdown {
+                title: "Scale"
                 values: root.scales
                 current: root.scale
+                label: v => v + "%"
                 onPicked: v => {
                     root.scale = v
                     root.run(["scale", String(v)].concat(root.screen ? [root.screen] : []))
@@ -163,42 +167,14 @@ Item {
             }
             Text { width: parent.width; wrapMode: Text.WordWrap; text: "Only the dwm bar, on every screen, on top of each screen's scale: its text, icons and height (dwm restarts in place, windows stay)."; color: "#565f89"; font.pixelSize: 10 }
 
-            // resolution
-            Row {
-                width: parent.width
-                spacing: 8
-                Column {
-                    width: parent.width - resBtn.width - 8
-                    anchors.verticalCenter: parent.verticalCenter
-                    spacing: 2
-                    Text { text: "Resolution"; color: "#c0caf5"; font.pixelSize: 14; font.bold: true }
-                    Text { text: root.resolution || "…"; color: "#7aa2f7"; font.pixelSize: 11 }
-                }
-                Rectangle {
-                    id: resBtn
-                    width: 86
-                    height: 30
-                    radius: 8
-                    color: rm.containsMouse ? "#7aa2f7" : "#1f2335"
-                    border.width: 1
-                    border.color: "#7aa2f7"
-                    Text {
-                        anchors.centerIn: parent
-                        text: "Change…"
-                        font.pixelSize: 11
-                        font.bold: true
-                        color: rm.containsMouse ? "#1a1b26" : "#7aa2f7"
-                    }
-                    MouseArea {
-                        id: rm
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: {
-                            root.requestClose()
-                            Quickshell.execDetached(["sh", "-c", "sleep 0.2; dwm-display res-menu"])
-                        }
-                    }
+            // resolution of the primary screen (asks to keep it, reverts after 15 s)
+            Dropdown {
+                title: "Resolution"
+                values: root.modes.length ? root.modes : [root.resolution]
+                current: root.resolution
+                onPicked: v => {
+                    root.requestClose()
+                    Quickshell.execDetached(["sh", "-c", "sleep 0.3; dwm-display res " + v])
                 }
             }
 

@@ -16,6 +16,9 @@ Update an existing install: sidebar → ⚙ Settings → **Updates**, or `lunari
 ## [Unreleased]
 
 ### Added
+- **Drop-down menus for each screen** (Settings → Monitors): *Resolution* (every mode the screen has), *Refresh rate*
+  (the rates of that resolution, e.g. 99.98 Hz instead of 59.97 Hz) and *Scale* (100–250 %). Settings → Screen & bar
+  uses drop-downs too (screen, scale, resolution). `dwm-monitor mode DisplayPort-0 3440x1440 99.98`.
 - **Default monitor layout**: Settings → Monitors → Saved layouts → ★ makes a layout the default; it is loaded at
   every login when its screens are connected (before, the screens came up in the driver's order and the layout had
   to be applied again). Without a default, a saved layout matching the screens is used. `dwm-monitor default main`,

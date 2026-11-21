@@ -32,9 +32,13 @@ Item {
                     if (f.length < 9) continue
                     o.push({ name: f[0], on: f[1] === "1", primary: f[2] === "1", mode: f[3], rate: f[4],
                              x: Number(f[5]), y: Number(f[6]), modes: f[7].split(",").filter(m => m), model: f[8],
-                             scale: Number(f[9]) || 100, logical: f[10] || f[3] })
+                             scale: Number(f[9]) || 100, logical: f[10] || f[3],
+                             allModes: (f[11] || "").split(";").filter(x => x).map(x => x.split("@")[0]),
+                             rates: root.rateMap(f[11] || ""),
+                             rateNow: f[12] && f[12] !== "-" ? f[12] : "" })
                 }
-                root.outs = o
+                // rebuild the cards only when something changed (an open drop-down stays open)
+                if (JSON.stringify(o) !== JSON.stringify(root.outs)) root.outs = o
             }
         }
     }
@@ -69,7 +73,18 @@ Item {
     function wh(m) { const p = (m || "0x0").split("x"); return [Number(p[0]) || 0, Number(p[1]) || 0] }
     // size on the desktop: the scaled (logical) size when the screen is zoomed
     function size(o) { return wh(o.logical && o.logical !== "-" ? o.logical : o.mode) }
-    readonly property var scales: [100, 125, 150, 175, 200]
+    readonly property var scales: [100, 125, 150, 175, 200, 225, 250]
+    function hz(r) { return Number(r) + " Hz" }
+    // "3840x2160@120.00/60.00;2560x1440@59.95" -> { "3840x2160": ["120.00", "60.00"], … }
+    function rateMap(t) {
+        const m = {}
+        for (const x of t.split(";")) {
+            if (!x) continue
+            const p = x.split("@")
+            m[p[0]] = (p[1] || "").split("/").filter(y => y)
+        }
+        return m
+    }
 
     // a screen was dropped on the map: show it there until the real layout is read back
     function move(name, x, y) {
@@ -291,21 +306,29 @@ Item {
                         }
                     }
 
-                    // resolution
-                    ChipRow {
+                    // resolution (the highest refresh rate it has), refresh rate, scale: drop-downs
+                    Dropdown {
                         visible: mc.modelData.on
-                        values: mc.modelData.modes.slice(0, 4)
+                        title: "Resolution"
+                        values: mc.modelData.allModes && mc.modelData.allModes.length ? mc.modelData.allModes : mc.modelData.modes
                         current: mc.modelData.mode
-                        label: v => v
                         onPicked: v => root.mon(["mode", mc.modelData.name, v])
                     }
-
+                    Dropdown {
+                        visible: mc.modelData.on && (mc.modelData.rates[mc.modelData.mode] || []).length > 0
+                        title: "Refresh rate"
+                        values: mc.modelData.rates[mc.modelData.mode] || []
+                        current: mc.modelData.rateNow
+                        label: v => root.hz(v)
+                        onPicked: v => root.mon(["mode", mc.modelData.name, mc.modelData.mode, v])
+                    }
                     // scale (zoom) of this screen only: bar, windows and menus on it
-                    ChipRow {
+                    Dropdown {
                         visible: mc.modelData.on
+                        title: "Scale"
                         values: root.scales
                         current: mc.modelData.scale
-                        label: v => v + "%"
+                        label: v => v + "%" + (v === 100 ? "  (none)" : "")
                         onPicked: v => root.disp(["scale", String(v), mc.modelData.name])
                     }
 
