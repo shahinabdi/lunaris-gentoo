@@ -17,6 +17,8 @@ x11-misc/clipmenu -dmenu rofi
 x11-misc/autorandr -udev -systemd
 # brightness without root: udev rule for the video group
 app-misc/brightnessctl udev
+# brightness of external monitors (DDC/CI) without root: udev rule + i2c group
+app-misc/ddcutil user-permissions
 
 # login screen and its session tracking
 gui-apps/sddm elogind

@@ -5,8 +5,8 @@ base-devel git libx11 libxft libxinerama fontconfig freetype2 fribidi
 kitty rofi picom dunst libnotify feh xdg-utils perl xsettingsd quickshell fastfetch python htop
 # audio (PipeWire + noise-cancelling mic)
 pipewire pipewire-pulse pipewire-alsa wireplumber pavucontrol noise-suppression-for-voice
-# network, bluetooth, brightness
-networkmanager bluez bluez-utils brightnessctl
+# network, bluetooth, brightness (laptop panel: brightnessctl, external monitors over DDC/CI: ddcutil)
+networkmanager bluez bluez-utils brightnessctl ddcutil
 # screenshots, clipboard, lock
 maim xclip xdotool flameshot clipmenu i3lock xcolor
 # monitors: hotplug + saved layouts

@@ -17,6 +17,8 @@ media-video/pipewire media-video/wireplumber media-libs/libpulse media-sound/pav
 media-libs/noise-suppression-for-voice
 # network, bluetooth
 net-misc/networkmanager net-wireless/bluez
+# brightness of external monitors over DDC/CI (dwm-bright); USE=user-permissions in package.use
+app-misc/ddcutil
 # screenshots, clipboard, lock
 media-gfx/maim x11-misc/xclip x11-misc/xdotool media-gfx/flameshot x11-misc/clipmenu x11-misc/i3lock
 # monitors: hotplug + saved layouts (the udev rule comes from Lunaris, see system/gentoo/etc/udev)

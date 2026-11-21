@@ -1,0 +1,3 @@
+# Lunaris: brightness of external monitors over DDC/CI (dwm-bright / ddcutil) without root:
+# the i2c group may use /dev/i2c-* (install.sh adds you to it)
+KERNEL=="i2c-[0-9]*", GROUP="i2c", MODE="0660"
