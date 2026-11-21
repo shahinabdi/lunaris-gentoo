@@ -1,29 +1,30 @@
-# Lunaris
+# Lunaris for Gentoo
 
 **Website: <https://lunaris.shahinabdi.com>** · formerly *dwm-btw* / `dwm-dotfiles`
 
-Arch Linux (or **Gentoo with OpenRC — see [GENTOO.md](GENTOO.md)**) + [dwm](https://github.com/shahinabdi/lunaris-dwm) (X11) desktop: Tokyo Night colours, a Quickshell
+**Gentoo Linux with OpenRC + elogind** + [dwm](https://github.com/shahinabdi/lunaris-dwm) (X11) desktop: Tokyo Night colours, a Quickshell
 quick-settings sidebar, rofi menus, PipeWire with a noise-cancelling mic, screenshots, clipboard history,
 per-screen scaling, drag-and-drop monitor layout and an in-place dwm restart.
+
+This is the Gentoo edition of **[Lunaris](https://github.com/shahinabdi/lunaris)** (Arch Linux). It follows the Arch repo and adds the Gentoo path (emerge, GURU, OpenRC). On Arch, use the Arch repo.
 
 The dwm source and its helper scripts (`dwm-shot`, `dwm-clip`, `dwm-power`, `dwm-display`, `dwm-dev`,
 `dwm-help`, `dwm-status`, …) live in the **[lunaris-dwm](https://github.com/shahinabdi/lunaris-dwm)** repo; this repo holds everything else and installs both.
 
 ## Install
 
-> **Gentoo?** The same `install.sh` works on Gentoo + OpenRC (emerge, GURU, OpenRC services, SDDM through
-> `display-manager`). Read **[GENTOO.md](GENTOO.md)** first: it needs a desktop profile and has its own package lists.
+> Read **[GENTOO.md](GENTOO.md)** first: it needs a desktop profile, the GURU overlay and has its own package lists.
 
 ```sh
-sudo pacman -S --needed git
-git clone https://github.com/shahinabdi/lunaris.git
-cd lunaris
+sudo emerge --noreplace dev-vcs/git
+git clone https://github.com/shahinabdi/lunaris-gentoo.git ~/lunaris-gentoo
+cd ~/lunaris-gentoo
 ./install.sh --dry-run   # see what it would do
 ./install.sh                      # French AZERTY keyboard (default)
 ./install.sh --keyboard qwerty    # QWERTY keyboard (US / UK / most others)
 ```
 
-Then log in on a TTY and run `startx`.
+Then reboot (SDDM), or with `--no-sddm` log in on a TTY and run `startx`.
 
 | Option | Effect |
 |---|---|

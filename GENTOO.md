@@ -3,6 +3,7 @@
 Lunaris (dwm + Quickshell sidebar + SDDM *Sugar Candy* login screen, Tokyo Night) was born on Arch Linux.
 This guide covers installing and using it on **Gentoo Linux with OpenRC + elogind**. The same `install.sh`
 detects Gentoo (`/etc/gentoo-release`) and takes the Gentoo path; nothing in the Arch path changed.
+This repo (**lunaris-gentoo**) is the Gentoo edition; Arch users: <https://github.com/shahinabdi/lunaris>.
 
 - [What is different on Gentoo](#what-is-different-on-gentoo)
 - [Before you start](#before-you-start)
@@ -77,8 +78,8 @@ Gentoo with **systemd** is not supported yet (the installer stops); the Arch cod
 ## Install
 
 ```sh
-git clone https://github.com/shahinabdi/lunaris.git ~/lunaris
-cd ~/lunaris
+git clone https://github.com/shahinabdi/lunaris-gentoo.git ~/lunaris-gentoo
+cd ~/lunaris-gentoo
 ./install.sh --dry-run             # see every step, change nothing
 ./install.sh                       # French AZERTY (default)
 ./install.sh --keyboard qwerty     # QWERTY (US / UK / most others)
