@@ -58,7 +58,7 @@ Item {
         if (/mail/.test(t)) return 0xF01EE
         if (/firefox|chrom|brave|browser/.test(t)) return 0xF059F
         if (/discord|telegram|signal|message|chat/.test(t)) return 0xF0369
-        if (/update|pacman|yay/.test(t)) return 0xF06B0
+        if (/update|pacman|yay|emerge|portage/.test(t)) return 0xF06B0
         return 0xF009A
     }
 

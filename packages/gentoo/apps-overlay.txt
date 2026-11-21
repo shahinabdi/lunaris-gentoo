@@ -1,0 +1,5 @@
+# workspace apps from overlays (skipped with --no-aur / --no-overlay-apps)
+# 5 Proton Mail, 6 Obsidian (GURU)
+mail-client/proton-mail-bin app-office/obsidian
+# 2 Brave (another-brave-overlay: eselect repository enable another-brave-overlay)
+www-client/brave-browser

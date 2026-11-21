@@ -1,0 +1,3 @@
+# Lunaris on Gentoo — packages from the GURU overlay (install.sh enables it: eselect repository enable guru)
+# quickshell = the sidebar, brightnessctl = brightness keys/block, nerdfonts = JetBrainsMono + Go Mono Nerd Fonts
+gui-apps/quickshell app-misc/brightnessctl media-fonts/nerdfonts x11-themes/adw-gtk3

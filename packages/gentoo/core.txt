@@ -1,0 +1,28 @@
+# Lunaris on Gentoo — core packages (::gentoo). Same roles as ../core.txt (Arch).
+# USE flags / keywords / licenses they need: system/gentoo/etc/portage/*/lunaris (installed by install.sh)
+# X11 + build
+x11-base/xorg-server x11-apps/xinit x11-apps/xrandr x11-apps/xsetroot x11-apps/xprop x11-apps/xrdb
+x11-apps/xwininfo x11-apps/xset x11-apps/setxkbmap
+dev-vcs/git x11-libs/libX11 x11-libs/libXft x11-libs/libXinerama media-libs/fontconfig media-libs/freetype
+dev-libs/fribidi virtual/pkgconfig
+# session (no systemd): logind replacement + D-Bus session bus
+sys-auth/elogind sys-apps/dbus
+# desktop
+x11-terms/kitty x11-misc/rofi x11-misc/picom x11-misc/dunst x11-libs/libnotify media-gfx/feh x11-misc/xdg-utils
+dev-lang/perl x11-misc/xsettingsd app-misc/fastfetch dev-lang/python sys-process/htop
+# lock screen / profile picture rendering (dwm-lock), downloads (dwm-font, install.sh)
+media-video/ffmpeg net-misc/curl app-arch/unzip
+# audio (PipeWire as the sound server + noise-cancelling mic); pactl comes from libpulse
+media-video/pipewire media-video/wireplumber media-libs/libpulse media-sound/pavucontrol
+media-libs/noise-suppression-for-voice
+# network, bluetooth
+net-misc/networkmanager net-wireless/bluez
+# screenshots, clipboard, lock
+media-gfx/maim x11-misc/xclip x11-misc/xdotool media-gfx/flameshot x11-misc/clipmenu x11-misc/i3lock
+# monitors: hotplug + saved layouts (the udev rule comes from Lunaris, see system/gentoo/etc/udev)
+x11-misc/autorandr
+# login screen: SDDM + Sugar Candy (Qt6 port in sddm/), started by OpenRC's display-manager service
+gui-apps/sddm gui-apps/sddm-gentoo-config gui-libs/display-manager-init dev-qt/qt5compat dev-qt/qtsvg
+# look: themes, icons, fonts (capitaine-cursors and Vazirmatn are not packaged: install.sh downloads them)
+x11-themes/gnome-themes-standard x11-themes/papirus-icon-theme gui-apps/qt6ct
+media-fonts/jetbrains-mono media-fonts/dejavu

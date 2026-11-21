@@ -1,0 +1,33 @@
+# Lunaris desktop (install.sh) — USE flags. Merge with your own files; re-run emerge -avuDN @world after edits.
+
+# quickshell (sidebar) needs Qt with D-Bus, Vulkan and X11
+dev-qt/qtbase dbus vulkan X opengl
+# Lunaris runs on dwm (X11): leave out quickshell's Wayland/Hyprland modules and the crash handler (~amd64 dep)
+gui-apps/quickshell X -wayland -layer-shell -session-lock -toplevel-management -hyprland -screencopy -greetd -crash-handler
+
+# PipeWire is the sound server (pulse + ALSA), with Bluetooth audio; started by gentoo-pipewire-launcher
+media-video/pipewire sound-server pipewire-alsa bluetooth dbus elogind extra
+media-video/wireplumber elogind
+
+# compositor with the GLX backend (picom --backend glx --vsync)
+x11-misc/picom opengl dbus
+# clipboard history through rofi (dwm-clip)
+x11-misc/clipmenu -dmenu rofi
+# no systemd unit / systemctl udev rule: Lunaris ships its own udev rule (90-lunaris-autorandr.rules)
+x11-misc/autorandr -udev -systemd
+# brightness without root: udev rule for the video group
+app-misc/brightnessctl udev
+
+# login screen and its session tracking
+gui-apps/sddm elogind
+sys-auth/pambase elogind
+x11-misc/rofi X
+
+# OBS Studio (workspace 10) needs ffmpeg with the Opus codec
+media-video/ffmpeg opus
+
+# wallpaper on every screen on its own (without Xinerama feh stretches one image over all the screens)
+media-gfx/feh xinerama
+
+# fonts used by the bar, terminal and sidebar
+media-fonts/nerdfonts jetbrainsmono gomono nerdfontssymbolsonly

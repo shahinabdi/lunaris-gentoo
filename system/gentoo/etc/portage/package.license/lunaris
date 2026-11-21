@@ -1,0 +1,3 @@
+# Lunaris desktop (install.sh) — non-free licenses of the workspace apps
+app-editors/vscode Microsoft-vscode
+app-office/obsidian Obsidian-EULA

@@ -1,0 +1,2 @@
+# workspace apps (::gentoo): 3 VS Code, 4 Thunar, 10 OBS
+app-editors/vscode xfce-base/thunar media-video/obs-studio

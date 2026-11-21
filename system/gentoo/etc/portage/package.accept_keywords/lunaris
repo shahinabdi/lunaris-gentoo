@@ -1,0 +1,11 @@
+# Lunaris desktop (install.sh) — packages only available as ~amd64 (testing)
+# GURU
+gui-apps/quickshell ~amd64
+app-misc/brightnessctl ~amd64
+media-fonts/nerdfonts ~amd64
+x11-themes/adw-gtk3 ~amd64
+app-office/obsidian ~amd64
+mail-client/proton-mail-bin ~amd64
+# ::gentoo
+media-libs/noise-suppression-for-voice ~amd64
+media-video/obs-studio ~amd64

@@ -1,0 +1,4 @@
+# Lunaris (Gentoo / no systemd): monitor plugged in or out -> autorandr (saved layout, else side by side).
+# On Arch the same is done by autorandr.service + autorandr.service.d/override.conf.
+# dwm-autorandr may wait while the screens are asleep, so it is detached (udev kills slow RUN programs).
+ACTION=="change", SUBSYSTEM=="drm", RUN+="/usr/bin/setsid -f /usr/local/bin/dwm-autorandr"
